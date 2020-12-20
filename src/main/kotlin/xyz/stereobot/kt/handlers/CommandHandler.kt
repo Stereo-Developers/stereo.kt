@@ -15,6 +15,7 @@ import xyz.stereobot.kt.commands.music.*
 import xyz.stereobot.kt.commands.owner.*
 import xyz.stereobot.kt.commands.util.*
 import xyz.stereobot.kt.database.DatabaseManager
+import xyz.stereobot.kt.database.providers.SettingsProvider
 import java.util.*
 
 import javax.annotation.Nullable
@@ -23,17 +24,20 @@ import kotlin.math.round
 
 class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
   private val logger = LoggerFactory.getLogger(CommandHandler::class.java)
-  val database = DatabaseManager()
   private val config = Configuration()
+  
+  val database = DatabaseManager()
+  val settings = SettingsProvider(
+    database,
+    config,
+    config.get("database.name"),
+    "guilds"
+  )
   
   val cooldowns = HashMap<String, Long>()
   
   fun register(command: Command) {
     this.add(command)
-  }
-  
-  fun unregister(command: Command) {
-    this.remove(command)
   }
   
   fun findCommand(search: String): Command? {
@@ -57,10 +61,13 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
     val content = event.message.contentRaw
     val mentionPrefix = "<@!?(\\d+)>\\s*".toRegex()
     
-    var prefix = config.get<List<String>>("bot.prefixes")
-      .find {
-        content.startsWith(it.toLowerCase())
-      }
+    var prefix = this.settings.get<List<String>>(
+      if (event.isFromGuild)
+        event.guild.id
+      else "",
+      "prefixes",
+      config.get("bot.prefixes")
+    ).find { content.toLowerCase().startsWith(it.toLowerCase()) }
   
     if (mentionPrefix.containsMatchIn(content)) {
       val found = mentionPrefix.find(content)
