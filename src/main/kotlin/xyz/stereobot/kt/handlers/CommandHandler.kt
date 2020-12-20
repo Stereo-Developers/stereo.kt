@@ -1,4 +1,4 @@
-package xyz.stereobot.kt.handlers.command
+package xyz.stereobot.kt.handlers
 
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter
 import net.dv8tion.jda.api.EmbedBuilder
@@ -24,7 +24,7 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
   private val logger = LoggerFactory.getLogger(CommandHandler::class.java)
   private val config = Configuration()
   
-  val cooldowns = CooldownHandler()
+  val cooldowns = HashMap<String, Long>()
   
   fun register(command: Command) {
     this.add(command)
@@ -118,7 +118,8 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
         val cooldownKey = "${event.author.id}_${command.name}"
   
         if (this.cooldowns.containsKey(cooldownKey)) {
-          val cooldown = this.cooldowns.getCooldown(cooldownKey)!!
+          val cooldown = this.cooldowns.get(cooldownKey)!!
+          
           if (Calendar.getInstance().timeInMillis >= cooldown) {
             this.cooldowns.remove(cooldownKey)
           } else {

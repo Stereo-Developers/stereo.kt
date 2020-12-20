@@ -3,7 +3,7 @@ package xyz.stereobot.kt.commands.util
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.MessageEmbed
 import xyz.stereobot.kt.commands.Context
-import xyz.stereobot.kt.handlers.command.CommandHandler
+import xyz.stereobot.kt.handlers.CommandHandler
 import xyz.stereobot.kt.objects.Command
 import xyz.stereobot.kt.utils.PrologBuilder
 

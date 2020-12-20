@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import xyz.stereobot.kt.commands.Context
-import xyz.stereobot.kt.handlers.command.CommandHandler
+import xyz.stereobot.kt.handlers.CommandHandler
 import xyz.stereobot.kt.lavaplayer.PlayerManager
 import xyz.stereobot.kt.objects.Command
 import java.net.URL

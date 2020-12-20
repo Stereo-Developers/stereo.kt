@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.events.ReadyEvent
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import org.slf4j.LoggerFactory
-import xyz.stereobot.kt.handlers.command.CommandHandler
 
 class ListenerHandler(val waiter: EventWaiter) : ListenerAdapter() {
   private val logger = LoggerFactory.getLogger(ListenerHandler::class.java)
