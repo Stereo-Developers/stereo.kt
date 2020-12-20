@@ -67,8 +67,6 @@ class NightCoreCommand : Command() {
       return
     }
     
-    
-    
     when (ctx.scheduler.filterManager.filter) {
       "nightcore" -> {
         ctx.scheduler.filterManager.filter = "nothing"
