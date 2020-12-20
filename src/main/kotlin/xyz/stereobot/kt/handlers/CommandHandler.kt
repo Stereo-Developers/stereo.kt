@@ -14,6 +14,7 @@ import xyz.stereobot.kt.objects.Command
 import xyz.stereobot.kt.commands.music.*
 import xyz.stereobot.kt.commands.owner.*
 import xyz.stereobot.kt.commands.util.*
+import xyz.stereobot.kt.database.DatabaseManager
 import java.util.*
 
 import javax.annotation.Nullable
@@ -22,6 +23,7 @@ import kotlin.math.round
 
 class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
   private val logger = LoggerFactory.getLogger(CommandHandler::class.java)
+  val database = DatabaseManager()
   private val config = Configuration()
   
   val cooldowns = HashMap<String, Long>()
@@ -168,7 +170,7 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
   }
   
   init {
-    register(PingCommand())
+    register(PingCommand(database))
     register(HelpCommand(this))
     
     register(PlayCommand(this))

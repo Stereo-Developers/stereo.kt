@@ -39,6 +39,7 @@ class EvalCommand(val commands: CommandHandler) : Command() {
         engine.put("args", args)
         engine.put("engine", engine)
         engine.put("commands", commands)
+        engine.put("database", commands.database)
     
         var before = System.currentTimeMillis()
         val evaluated = engine.eval(args.joinToString(" ")).toString()

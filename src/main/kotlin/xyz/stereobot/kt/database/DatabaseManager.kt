@@ -16,14 +16,14 @@ class DatabaseManager {
   val monitor = Monitor()
   
   init {
-    val db = config.get<MongoDatabaseOptions>("database")
+    val db = config.get<HashMap<String, Any>>("database")
     
     val settings = MongoClientSettings.builder()
       .applyToServerSettings { it.addServerMonitorListener(monitor) }
       .applicationName("main")
       .applyConnectionString(
         ConnectionString(
-          "mongodb://${db.user}:${db.password}@${db.host}:${db.port}/${db.name}"
+          "mongodb://${db["user"]}:${db["password"]}@${db["host"]}:${db["port"]}/${db["name"]}"
         )
       )
       .build()
