@@ -1,9 +1,14 @@
+/**
+ * Taken from https://github.com/Frederikam/Lavalink/blob/dev/LavalinkServer/src/main/java/lavalink/server/player/filters/FilterChain.kt
+ * Commit 386c2f3bee435821041c8f81a22bfd511807ae13
+ * Thanks Lavaplayer for having no documentation (that i can find) (jk still love you lavaplayer)
+ */
+
 package xyz.stereobot.kt.lavaplayer.filters
 
 import com.github.natanbc.lavadsp.natives.TimescaleNativeLibLoader
 import com.sedmelluq.discord.lavaplayer.filter.AudioFilter
 import com.sedmelluq.discord.lavaplayer.filter.FloatPcmAudioFilter
-import com.sedmelluq.discord.lavaplayer.filter.PcmFilterFactory
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
 import org.slf4j.LoggerFactory
 import xyz.stereobot.kt.lavaplayer.filters.configs.BaseConfig
@@ -46,7 +51,7 @@ class FilterManager(val player: AudioPlayer) {
         )
       }
   
-      // reverse, because the lavadsp example shows that so yeah
+      // reverse, because thats what lavalink does lol
       appliedFilters.reversed() as List<AudioFilter>?
     }
   }
