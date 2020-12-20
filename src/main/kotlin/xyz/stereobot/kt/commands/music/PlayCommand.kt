@@ -88,6 +88,8 @@ class PlayCommand(val commands: CommandHandler) : Command() {
         return
       }
       
+      song = song.replace("<(.+)>".toRegex(), "$1")
+      
       if (isUrl(song)) {
         PlayerManager.getInstance().loadAndPlay(ctx, song)
         return
