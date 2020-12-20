@@ -51,6 +51,10 @@ class HelpCommand(val commands: CommandHandler) : Command() {
             else command.getTriggers()!!.joinToString(", "))
           addLine("Info", command.getDescription())
           addLine("Group", command.getCategory())
+          
+          if (command.getCooldown() != null) {
+            addLine("Cooldown", "${command.getCooldown()!! / 1000}s")
+          }
         }.build()
       )
     
