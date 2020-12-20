@@ -9,6 +9,7 @@ abstract class Command : ICommand {
   var usages: List<String>? = listOf()
   var use: String? = null
   var group: String = "Util"
+  var ratelimit: Int? = null
   
   fun getColor(color: String): Int {
     return Integer.parseInt(
@@ -55,5 +56,9 @@ abstract class Command : ICommand {
   
   override fun getCategory(): String {
     return group
+  }
+  
+  override fun getCooldown(): Int? {
+    return this.ratelimit
   }
 }

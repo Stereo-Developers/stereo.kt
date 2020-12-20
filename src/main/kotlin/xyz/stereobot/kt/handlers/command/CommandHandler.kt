@@ -1,4 +1,4 @@
-package xyz.stereobot.kt.handlers
+package xyz.stereobot.kt.handlers.command
 
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter
 import net.dv8tion.jda.api.EmbedBuilder
@@ -14,12 +14,17 @@ import xyz.stereobot.kt.objects.Command
 import xyz.stereobot.kt.commands.music.*
 import xyz.stereobot.kt.commands.owner.*
 import xyz.stereobot.kt.commands.util.*
+import java.util.*
 
 import javax.annotation.Nullable
+import kotlin.collections.ArrayList
+import kotlin.math.round
 
 class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
   private val logger = LoggerFactory.getLogger(CommandHandler::class.java)
   private val config = Configuration()
+  
+  val cooldowns = CooldownHandler()
   
   fun register(command: Command) {
     this.add(command)
@@ -107,6 +112,36 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
           .queue()
   
         return
+      }
+      
+      if (command.getCooldown() != null) {
+        val cooldownKey = "${event.author.id}_${command.name}"
+  
+        if (this.cooldowns.containsKey(cooldownKey)) {
+          val cooldown = this.cooldowns.getCooldown(cooldownKey)!!
+          if (Calendar.getInstance().timeInMillis >= cooldown) {
+            this.cooldowns.remove(cooldownKey)
+          } else {
+            val time = round((cooldown - Calendar.getInstance().timeInMillis).toDouble())
+      
+            event.channel
+              .sendMessage(
+                EmbedBuilder()
+                  .setColor(Integer.parseInt("f55e53", 16))
+                  .setDescription(
+                    "Woah there! Please wait **${round(time / 1000).toInt()}s** until using this command again."
+                  )
+                  .build()
+              )
+              .queue()
+      
+            return
+          }
+        } else {
+          this.cooldowns[cooldownKey] = Calendar.getInstance().timeInMillis + command.getCooldown()!!
+        }
+  
+        this.cooldowns[cooldownKey] = Calendar.getInstance().timeInMillis + command.getCooldown()!!
       }
       
       val args = preArgs.subList(1, preArgs.size)

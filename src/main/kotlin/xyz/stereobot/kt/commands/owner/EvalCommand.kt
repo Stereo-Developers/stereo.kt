@@ -3,6 +3,7 @@ package xyz.stereobot.kt.commands.owner
 import net.dv8tion.jda.api.EmbedBuilder
 import xyz.stereobot.kt.commands.Context
 import xyz.stereobot.kt.objects.Command
+import java.util.*
 import javax.script.ScriptEngineManager
 
 class EvalCommand : Command() {
@@ -30,7 +31,6 @@ class EvalCommand : Command() {
       return
     }
     
-    try {
       val engine = ScriptEngineManager().getEngineByName("nashorn")
   
       try {
@@ -42,27 +42,17 @@ class EvalCommand : Command() {
         val evaluated = engine.eval(args.joinToString(" ")).toString()
         before = System.currentTimeMillis() - before
     
+        val subbed = if (evaluated.length > 1900) evaluated.substring(0, 1900) else evaluated
+        
         ctx.channel
-          .sendMessage("Evaluated in ")
-          .append(before.toString())
-          .append("ms")
-          .append("\n")
-          .append("```java\n")
-          .append(if (evaluated.length > 1900) evaluated.substring(0, 1900) else evaluated)
-          .append("```")
+          .sendMessage("*evaluated in ${before}ms*\n```js\n${subbed}```")
           .queue()
       } catch (error: Exception) {
+        val subbed = if (error.toString().length > 1900) error.toString().substring(0, 1900) else error.toString()
+        
         ctx.channel
-          .sendMessage("Exception:")
-          .append("\n")
-          .append("```java")
-          .append("\n")
-          .append(if (error.toString().length > 1900) error.toString().substring(0, 1900) else error.toString())
-          .append("```")
+          .sendMessage("Exeception:\n```js\n${subbed}```")
           .queue()
       }
-    } catch (e: Exception) {
-    
-    }
   }
 }

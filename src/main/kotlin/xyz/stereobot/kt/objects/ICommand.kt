@@ -15,4 +15,5 @@ interface ICommand {
   fun getBotPermissions(): List<String>?
   fun getUserPermissions(): List<String>?
   fun getCategory(): String
+  fun getCooldown(): Int?
 }
