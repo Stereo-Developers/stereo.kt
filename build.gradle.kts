@@ -24,6 +24,10 @@ dependencies {
   implementation(group = "net.dv8tion", name = "JDA", version = "4.2.0_168")
   implementation(group = "com.jagrosh", name = "jda-utilities", version = "3.0.4")
   
+  implementation(group = "org.mongodb", name = "mongo-java-driver", version = "3.12.7")
+  implementation(group = "com.github.agcom.bson", name = "bson-serialization", version = "0.5.0")
+  implementation(group ="com.github.agcom.bson", name = "bson-mongodb", version = "0.5.0")
+  
   implementation(group = "ch.qos.logback", name = "logback-classic", version = "1.2.3")
   
   implementation(group = "com.typesafe", name = "config", version = "1.4.0")
