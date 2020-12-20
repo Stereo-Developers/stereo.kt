@@ -6,6 +6,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.TextChannel
+import xyz.stereobot.kt.lavaplayer.filters.FilterManager
 import java.util.*
 
 class Scheduler(val player: AudioPlayer) : AudioEventAdapter() {
