@@ -114,8 +114,15 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
         return
       }
       
-      if (command.getCooldown() != null) {
-        val cooldownKey = "${event.author.id}_${command.name}"
+      if (
+        command.getCooldown() != null &&
+        !config.get<List<String>>("bot.owners").contains(event.author.id)
+      ) {
+        val cooldownKey = "${event.author.id}_${
+          if (event.isFromGuild)
+            event.guild.id 
+          else "DIRECT"
+        }_${command.name}"
   
         if (this.cooldowns.containsKey(cooldownKey)) {
           val cooldown = this.cooldowns.get(cooldownKey)!!
