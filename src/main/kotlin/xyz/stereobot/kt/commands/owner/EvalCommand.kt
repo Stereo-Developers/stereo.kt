@@ -2,11 +2,12 @@ package xyz.stereobot.kt.commands.owner
 
 import net.dv8tion.jda.api.EmbedBuilder
 import xyz.stereobot.kt.commands.Context
+import xyz.stereobot.kt.handlers.CommandHandler
 import xyz.stereobot.kt.objects.Command
 import java.util.*
 import javax.script.ScriptEngineManager
 
-class EvalCommand : Command() {
+class EvalCommand(val commands: CommandHandler) : Command() {
   init {
     this.name = "eval"
     this.aliases = listOf("evaluate", "ev")
@@ -37,6 +38,7 @@ class EvalCommand : Command() {
         engine.put("ctx", ctx)
         engine.put("args", args)
         engine.put("engine", engine)
+        engine.put("commands", commands)
     
         var before = System.currentTimeMillis()
         val evaluated = engine.eval(args.joinToString(" ")).toString()

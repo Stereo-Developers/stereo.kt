@@ -120,7 +120,7 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
       ) {
         val cooldownKey = "${event.author.id}_${
           if (event.isFromGuild)
-            event.guild.id 
+            event.guild.id
           else "DIRECT"
         }_${command.name}"
   
@@ -180,7 +180,7 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
     register(NightCoreCommand())
     register(BassboostCommand())
     
-    register(EvalCommand())
+    register(EvalCommand(this))
     register(ExecuteCommand())
   }
 }
