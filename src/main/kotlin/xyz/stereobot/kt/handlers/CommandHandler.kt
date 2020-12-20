@@ -9,13 +9,12 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import org.slf4j.LoggerFactory
 import xyz.stereobot.kt.Configuration
 import xyz.stereobot.kt.commands.Context
-import xyz.stereobot.kt.commands.music.*
-import xyz.stereobot.kt.commands.owner.EvalCommand
-import xyz.stereobot.kt.commands.owner.ExecuteCommand
-import xyz.stereobot.kt.commands.util.HelpCommand
 import xyz.stereobot.kt.objects.Command
 
-import xyz.stereobot.kt.commands.util.PingCommand
+import xyz.stereobot.kt.commands.music.*
+import xyz.stereobot.kt.commands.owner.*
+import xyz.stereobot.kt.commands.util.*
+
 import javax.annotation.Nullable
 
 class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
