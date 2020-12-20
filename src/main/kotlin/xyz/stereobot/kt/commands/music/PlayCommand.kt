@@ -23,6 +23,7 @@ class PlayCommand(val commands: CommandHandler) : Command() {
     )
     this.use = "[song or url]"
     this.guild = true
+    this.ratelimit = 3000
   }
   
   override fun invoke(ctx: Context, args: List<String>) {

@@ -18,6 +18,7 @@ class BassboostCommand : Command() {
     )
     this.guild = true
     this.group = "Music"
+    this.ratelimit = 7000
   }
   
   override fun invoke(ctx: Context, args: List<String>) {

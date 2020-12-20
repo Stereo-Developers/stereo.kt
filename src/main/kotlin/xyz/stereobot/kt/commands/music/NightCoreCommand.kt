@@ -1,8 +1,5 @@
 package xyz.stereobot.kt.commands.music
 
-import com.github.natanbc.lavadsp.timescale.TimescalePcmAudioFilter
-import com.github.natanbc.lavadsp.tremolo.TremoloPcmAudioFilter
-import com.sedmelluq.discord.lavaplayer.filter.AudioFilter
 import net.dv8tion.jda.api.EmbedBuilder
 import xyz.stereobot.kt.commands.Context
 import xyz.stereobot.kt.lavaplayer.filters.configs.Timescale
@@ -16,6 +13,7 @@ class NightCoreCommand : Command() {
     this.info = "Turns on or off the nightcore filter"
     this.group = "Music"
     this.guild = true
+    this.ratelimit = 7000
   }
   
   override fun invoke(ctx: Context, args: List<String>) {

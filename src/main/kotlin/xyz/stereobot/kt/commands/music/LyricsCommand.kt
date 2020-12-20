@@ -19,6 +19,7 @@ class LyricsCommand : Command() {
       "never gonna give you up"
     )
     this.group = "Music"
+    this.ratelimit = 2000
   }
   
   override fun invoke(ctx: Context, args: List<String>) {
