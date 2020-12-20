@@ -1,0 +1,11 @@
+# dirs
+.gradle
+gradle
+.idea
+out
+build
+
+# files
+config.conf
+gradlew
+gradlew.bat
