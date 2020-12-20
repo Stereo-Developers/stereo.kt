@@ -1,14 +1,20 @@
 package xyz.stereobot.kt.objects
 
+import net.dv8tion.jda.api.Permission
+
 abstract class Command : ICommand {
   var name: String = ""
   var aliases: List<String> = listOf()
+  var info: String = "no description"
+  var use: String? = null
+  var usages: List<String>? = listOf()
+  var group: String = "Util"
+  
   var owner: Boolean = false
   var guild: Boolean = false
-  var info: String = "no description"
-  var usages: List<String>? = listOf()
-  var use: String? = null
-  var group: String = "Util"
+  var botPerms: List<Permission> = listOf()
+  var userPerms: List<Permission> = listOf()
+  
   var ratelimit: Int? = null
   
   fun getColor(color: String): Int {
@@ -46,12 +52,12 @@ abstract class Command : ICommand {
     return this.usages
   }
   
-  override fun getBotPermissions(): List<String>? {
-    return null
+  override fun getBotPermissions(): List<Permission> {
+    return this.botPerms
   }
   
-  override fun getUserPermissions(): List<String>? {
-    return null
+  override fun getUserPermissions(): List<Permission> {
+    return this.userPerms
   }
   
   override fun getCategory(): String {

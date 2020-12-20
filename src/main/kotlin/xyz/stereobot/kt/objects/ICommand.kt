@@ -1,5 +1,6 @@
 package xyz.stereobot.kt.objects
 
+import net.dv8tion.jda.api.Permission
 import xyz.stereobot.kt.commands.Context
 
 interface ICommand {
@@ -12,8 +13,8 @@ interface ICommand {
   fun getExamples(): List<String>?
   fun getOwnerOnly(): Boolean
   fun getGuildOnly(): Boolean
-  fun getBotPermissions(): List<String>?
-  fun getUserPermissions(): List<String>?
+  fun getBotPermissions(): List<Permission>?
+  fun getUserPermissions(): List<Permission>?
   fun getCategory(): String
   fun getCooldown(): Int?
 }
