@@ -21,6 +21,7 @@ dependencies {
   
   implementation(group = "net.dv8tion", name = "JDA", version = "4.2.0_168")
   implementation(group = "com.jagrosh", name = "jda-utilities", version = "3.0.4")
+  implementation(group = "com.github.jkcclemens", name = "khttp", version="0.1.0")
   
   implementation(group = "ch.qos.logback", name = "logback-classic", version = "1.2.3")
   
