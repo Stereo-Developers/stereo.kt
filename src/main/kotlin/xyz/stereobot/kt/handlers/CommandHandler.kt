@@ -129,6 +129,7 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
     register(HelpCommand(this))
     
     register(PlayCommand(this))
+    register(LyricsCommand())
     register(NowPlayingCommand())
     register(QueueCommand())
     register(SkipCommand())
