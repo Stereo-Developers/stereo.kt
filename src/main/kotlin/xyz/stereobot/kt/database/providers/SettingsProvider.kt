@@ -24,6 +24,7 @@ class SettingsProvider(
       document["prefixes"] = config.get<List<String>>("bot.prefixes")
       document["dj"] = null
       document["vclock"] = null
+      document["defaultvolume"] = 100
       
       this.collection.insertOne(document)
       
