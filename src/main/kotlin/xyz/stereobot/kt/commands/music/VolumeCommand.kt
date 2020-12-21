@@ -20,12 +20,12 @@ class VolumeCommand : Command() {
   }
   
   override fun invoke(ctx: Context, args: List<String>) {
-    if (ctx.scheduler.queue.isEmpty()) {
+    if (ctx.player.playingTrack == null) {
       ctx.channel
         .sendMessage(
           EmbedBuilder()
             .setColor(getColor("#f55e53"))
-            .setDescription("There is no upcoming songs to skip to.")
+            .setDescription("There is no player spawned in the guild")
             .build()
         )
         .queue()
@@ -77,7 +77,7 @@ class VolumeCommand : Command() {
       return
     }
     
-    if (volume > 1 || volume < 100) {
+    if (volume > 100 || volume < 1) {
       ctx.channel
         .sendMessage(
           EmbedBuilder()

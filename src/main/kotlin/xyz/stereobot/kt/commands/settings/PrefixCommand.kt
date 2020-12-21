@@ -6,7 +6,7 @@ import xyz.stereobot.kt.commands.Context
 import xyz.stereobot.kt.handlers.CommandHandler
 import xyz.stereobot.kt.objects.Command
 
-class PrefixCommand(val commands: CommandHandler) : Command() {
+class PrefixCommand() : Command() {
   init {
     this.name = "prefix"
     this.aliases = listOf("prefixes", "pfx")
@@ -54,7 +54,7 @@ class PrefixCommand(val commands: CommandHandler) : Command() {
   private fun add(ctx: Context, prefix: String) {
     val newPrefix = prefix.replace("`", "")
     
-    var prefixes = this.commands.settings.get<List<String>>(
+    var prefixes = ctx.settings.get<List<String>>(
       ctx.guild.id,
       "prefixes",
       ctx.config.get("bot.prefixes")
@@ -74,7 +74,7 @@ class PrefixCommand(val commands: CommandHandler) : Command() {
     }
     
     prefixes = prefixes.plus(newPrefix)
-    this.commands.settings.update(ctx.guild.id, "prefixes", prefixes)
+    ctx.settings.update(ctx.guild.id, "prefixes", prefixes)
     
     ctx.channel
       .sendMessage(
@@ -89,7 +89,7 @@ class PrefixCommand(val commands: CommandHandler) : Command() {
   private fun remove(ctx: Context, prefix: String) {
     val newPrefix = prefix.replace("`", "")
   
-    var prefixes = this.commands.settings.get<List<String>>(
+    var prefixes = ctx.settings.get<List<String>>(
       ctx.guild.id,
       "prefixes",
       ctx.config.get("bot.prefixes")
@@ -109,7 +109,7 @@ class PrefixCommand(val commands: CommandHandler) : Command() {
     }
   
     prefixes = prefixes.minus(newPrefix)
-    this.commands.settings.update(ctx.guild.id, "prefixes", prefixes)
+    ctx.settings.update(ctx.guild.id, "prefixes", prefixes)
   
     ctx.channel
       .sendMessage(
@@ -122,7 +122,7 @@ class PrefixCommand(val commands: CommandHandler) : Command() {
   }
   
   private fun all(ctx: Context) {
-    val prefixes = this.commands.settings.get<List<String>>(
+    val prefixes = ctx.settings.get<List<String>>(
       ctx.guild.id,
       "prefixes",
       ctx.config.get("bot.prefixes")

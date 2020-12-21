@@ -6,11 +6,16 @@ import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.VoiceChannel
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import xyz.stereobot.kt.Configuration
+import xyz.stereobot.kt.database.providers.SettingsProvider
 import xyz.stereobot.kt.lavaplayer.PlayerManager
 import java.util.concurrent.TimeUnit
 import kotlin.math.ceil
 
-class Context(val event: MessageReceivedEvent, val waiter: EventWaiter) {
+class Context(
+  val event: MessageReceivedEvent,
+  val waiter: EventWaiter,
+  val settings: SettingsProvider,
+) {
   // Guild Related
   val guild = event.guild
   

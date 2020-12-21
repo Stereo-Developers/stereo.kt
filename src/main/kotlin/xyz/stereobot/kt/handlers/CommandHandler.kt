@@ -227,7 +227,7 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
       val args = preArgs.subList(1, preArgs.size)
       
       var before = System.currentTimeMillis()
-      command.invoke(Context(event, waiter), args)
+      command.invoke(Context(event, waiter, this.settings), args)
       before = System.currentTimeMillis() - before
       
       logger.info(
@@ -257,6 +257,6 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
     register(EvalCommand(this))
     register(ExecuteCommand())
     
-    register(PrefixCommand(this))
+    register(PrefixCommand())
   }
 }
