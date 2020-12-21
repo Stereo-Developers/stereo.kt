@@ -42,6 +42,11 @@ class SettingsProvider(
     return (data[key] ?: defaultValue) as T
   }
   
+  fun raw(id: String): Document {
+    return this.items[id] ?: this.init(id)
+  }
+  
+  
   fun update(id: String, key: String, value: Any): Document {
     val data = this.items[id] ?: this.init(id)
     
