@@ -252,6 +252,7 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
     register(NightCoreCommand())
     register(BassboostCommand())
     register(ShuffleCommand())
+    register(VolumeCommand())
     
     register(EvalCommand(this))
     register(ExecuteCommand())
