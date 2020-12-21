@@ -61,6 +61,8 @@ class PlayCommand(val commands: CommandHandler) : Command() {
           if (check) {
             return@waitForEvent
           }
+  
+          ctx.player.volume = ctx.settings.get(ctx.guild.id, "defaultvolume", 100)
           
           if (isUrl(song)) {
             PlayerManager.getInstance().loadAndPlay(ctx, song)
@@ -90,6 +92,8 @@ class PlayCommand(val commands: CommandHandler) : Command() {
       }
       
       song = song.replace("<(.+)>".toRegex(), "$1")
+  
+      ctx.player.volume = ctx.settings.get(ctx.guild.id, "defaultvolume", 100)
       
       if (isUrl(song)) {
         PlayerManager.getInstance().loadAndPlay(ctx, song)

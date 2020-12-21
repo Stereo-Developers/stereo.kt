@@ -13,6 +13,7 @@ import xyz.stereobot.kt.objects.Command
 
 import xyz.stereobot.kt.commands.music.*
 import xyz.stereobot.kt.commands.owner.*
+import xyz.stereobot.kt.commands.settings.DefaultVolumeCommand
 import xyz.stereobot.kt.commands.settings.PrefixCommand
 import xyz.stereobot.kt.commands.util.*
 import xyz.stereobot.kt.database.DatabaseManager
@@ -259,5 +260,6 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
     register(ExecuteCommand())
     
     register(PrefixCommand())
+    register(DefaultVolumeCommand())
   }
 }
