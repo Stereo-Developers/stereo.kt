@@ -13,6 +13,7 @@ import xyz.stereobot.kt.objects.Command
 
 import xyz.stereobot.kt.commands.music.*
 import xyz.stereobot.kt.commands.owner.*
+import xyz.stereobot.kt.commands.settings.PrefixCommand
 import xyz.stereobot.kt.commands.util.*
 import xyz.stereobot.kt.database.DatabaseManager
 import xyz.stereobot.kt.database.providers.SettingsProvider
@@ -54,6 +55,16 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
       array.filter { !member!!.hasPermission(Permission.getPermissions(it.rawValue)) }
     } else {
       array.filter { !member!!.hasPermission(channel, Permission.getPermissions(it.rawValue)) }
+    }
+  }
+  
+  private fun runPermissionChecks(perms: List<Permission>, member: Member?): List<Permission>? {
+    val raw = perms.map { it.rawValue }.reduce { acc, l -> acc + l }
+    
+    return if (!member!!.hasPermission(perms)) {
+      missing(null, member, raw)
+    } else {
+      null
     }
   }
   
@@ -121,6 +132,58 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
           .queue()
   
         return
+      }
+      
+      if (command.getBotPermissions().isNotEmpty()) {
+        val permissions = this.runPermissionChecks(
+          command.getBotPermissions(),
+          event.guild.selfMember
+        )
+        
+        if (!permissions.isNullOrEmpty()) {
+          event.channel
+            .sendMessage(
+              EmbedBuilder()
+                .setColor(Integer.parseInt("f55e53", 16))
+                .setDescription(
+                  "I am missing the permission${
+                    if (permissions.size > 1)
+                      "s"
+                    else ""
+                  }: ${permissions.joinToString(", ") { "`${it.getName()}`" }}."
+                )
+                .build()
+            )
+            .queue()
+          
+          return
+        }
+      }
+  
+      if (command.getUserPermissions().isNotEmpty()) {
+        val permissions = this.runPermissionChecks(
+          command.getUserPermissions(),
+          event.member
+        )
+    
+        if (!permissions.isNullOrEmpty()) {
+          event.channel
+            .sendMessage(
+              EmbedBuilder()
+                .setColor(Integer.parseInt("f55e53", 16))
+                .setDescription(
+                  "You are missing the permission${
+                    if (permissions.size > 1)
+                      "s"
+                    else ""
+                  }: ${permissions.joinToString(", ") { "`${it.getName()}`" }}."
+                )
+                .build()
+            )
+            .queue()
+      
+          return
+        }
       }
       
       if (
@@ -191,5 +254,7 @@ class CommandHandler(val waiter: EventWaiter) : ArrayList<Command>() {
     
     register(EvalCommand(this))
     register(ExecuteCommand())
+    
+    register(PrefixCommand(this))
   }
 }

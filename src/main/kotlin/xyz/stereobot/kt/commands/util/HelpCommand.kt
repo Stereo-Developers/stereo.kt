@@ -1,6 +1,7 @@
 package xyz.stereobot.kt.commands.util
 
 import net.dv8tion.jda.api.EmbedBuilder
+import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.MessageEmbed
 import xyz.stereobot.kt.commands.Context
 import xyz.stereobot.kt.handlers.CommandHandler
@@ -115,7 +116,19 @@ class HelpCommand(val commands: CommandHandler) : Command() {
         !ctx.config.get<List<String>>("bot.owners")
           .contains(ctx.author.id)
       ) "Owner"
-      else null
+      else null,
+      if (
+        !(
+            ctx.event.isFromGuild &&
+            commands.missing(
+              null,
+              ctx.member,
+              Permission.getRaw(
+                Permission.MESSAGE_MANAGE,
+              )
+            ).isEmpty()
+          )
+      ) "Settings" else null
     )
   }
 }

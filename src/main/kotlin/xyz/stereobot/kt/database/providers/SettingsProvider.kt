@@ -16,7 +16,7 @@ class SettingsProvider(
   private val collection = database.client.getDatabase(dbName).getCollection(collectionName)
   
   fun init(id: String): Document {
-    val settings = collection.find().toList().find { it[id]!! == id }
+    val settings = collection.find().toList().find { it["id"]!! == id }
     
     return if (settings.isNullOrEmpty()) {
       val document = Document()
@@ -24,6 +24,8 @@ class SettingsProvider(
       document["prefixes"] = config.get<List<String>>("bot.prefixes")
       document["dj"] = null
       document["vclock"] = null
+      
+      this.collection.insertOne(document)
       
       this.items[id] = document
       
@@ -34,29 +36,29 @@ class SettingsProvider(
   }
   
   fun <T> get(id: String, key: String, defaultValue: T): T {
-    val data = this.items[id]
-    
-    if (data.isNullOrEmpty()) {
-      return defaultValue
-    }
+    val data = this.items[id] ?: this.init(id)
     
     return (data[key] ?: defaultValue) as T
   }
   
   fun update(id: String, key: String, value: Any): Document {
     val data = this.items[id] ?: this.init(id)
-    data[key] = value
+    
+    val doc = Document()
+    doc.putAll(data)
+    doc.remove("_id_")
+    doc[key] = value
     
     collection.replaceOne(
       data.toBsonDocument(
         data::class.java,
         MongoClientSettings.getDefaultCodecRegistry()
       ),
-      data,
+      doc,
       ReplaceOptions().upsert(true)
     )
 
-    this.items[id] = data
+    this.items.put(id, doc)
     return data
   }
 }
