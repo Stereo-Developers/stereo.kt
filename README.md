@@ -2,6 +2,8 @@
 
 A music bot that uh, is written in Kotlin + Lavaplayer, the perfect mix, amirite?
 
+Oh and yes, this is the rewrite of the rewrite of the rewrite, fuck off kthx
+
 ---
 
 ## Selfhosting
