@@ -1,14 +1,9 @@
-<h1 align="center">Stereo.kt</h1>
+<h1 align="center">stereo.kt</h1>
 
-A music bot that uh, is written in Kotlin + Lavaplayer, the perfect mix, amirite?
+This version of the bot is in [flight](https://github.com/Devoxin/Flight), as I've seen it used in many places. I've seen big bots use it, so it must be good. 
 
----
-
-## Selfhosting
-
-I honestly don't even know how to selfhost my own bot lmfao (im kidding). I don't recommend it though.
+This is mostly me expirementing with it, and if I like it enough I might continue to use it.
 
 ---
 
-<h5>stereo.kt › 2020</h5>
-
+<h5 align="center">stereo :: 2021</h5>
