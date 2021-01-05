@@ -9,11 +9,13 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag
 import org.slf4j.LoggerFactory
 import xyz.stereobot.bot.events.EventListener
 import xyz.stereobot.bot.events.FlightEventListener
+import xyz.stereobot.lavaplayer.Registry
 
 object Launcher {
   val logger = LoggerFactory.getLogger(Launcher::class.java)
   val config = Configuration()
   val waiter = EventWaiter()
+  val playerRegistry = Registry()
   
   @ExperimentalStdlibApi
   @JvmStatic
