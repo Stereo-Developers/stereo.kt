@@ -1,6 +1,7 @@
 package xyz.stereobot.lavaplayer
 
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager
+import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers
 import me.devoxin.flight.api.Context
 import java.net.URL
 import java.net.URLEncoder
@@ -33,6 +34,8 @@ class Registry {
   
   fun load(ctx: Context, query: String) {
     val manager = get(ctx.guild!!.idLong)
+    ctx.guild?.audioManager?.sendingHandler = manager
+    
     var search = query
     
     if (!isUrl(query)) {
@@ -49,5 +52,10 @@ class Registry {
     } catch (e: Exception) {
       false
     }
+  }
+  
+  init {
+    AudioSourceManagers.registerRemoteSources(manager)
+    AudioSourceManagers.registerLocalSource(manager)
   }
 }

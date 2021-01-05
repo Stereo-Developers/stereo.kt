@@ -4,6 +4,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
+import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.audio.AudioSendHandler
@@ -40,6 +41,25 @@ class Manager(val player: AudioPlayer) : AudioEventAdapter(), AudioSendHandler {
     }
   }
   
+  override fun onTrackEnd(player: AudioPlayer?, track: AudioTrack?, endReason: AudioTrackEndReason?) {
+    if (endReason!!.mayStartNext) {
+      if (queue.isEmpty()) {
+        channel?.sendMessage(
+          EmbedBuilder()
+            .setColor(Integer.parseInt("3377de", 16))
+            .setDescription("")
+            .build()
+        )?.queue {
+          channel?.guild?.audioManager?.closeAudioConnection()
+        }
+        
+        return
+      }
+      
+      next()
+    }
+  }
+  
   override fun onTrackException(player: AudioPlayer?, track: AudioTrack?, exception: FriendlyException?) {
     channel?.sendMessage(
       EmbedBuilder()
@@ -63,8 +83,6 @@ class Manager(val player: AudioPlayer) : AudioEventAdapter(), AudioSendHandler {
           .setThumbnail(thumbnailUrl)
           .setTitle(track.info.author)
           .setDescription("[${track.info.title}](${track.info.uri})")
-          .setFooter("Playing")
-          .setTimestamp(LocalDateTime.now())
           .build()
       )?.queue { this.messageId = it.idLong }
     } else {
@@ -76,8 +94,6 @@ class Manager(val player: AudioPlayer) : AudioEventAdapter(), AudioSendHandler {
             .setThumbnail(thumbnailUrl)
             .setTitle(track.info.author)
             .setDescription("[${track.info.title}](${track.info.uri})")
-            .setFooter("Playing")
-            .setTimestamp(LocalDateTime.now())
             .build()
         )?.queue()
       } catch (e: Exception) {
@@ -103,5 +119,7 @@ class Manager(val player: AudioPlayer) : AudioEventAdapter(), AudioSendHandler {
   
   init {
     frame.setBuffer(buffer)
+    
+    player.addListener(this)
   }
 }

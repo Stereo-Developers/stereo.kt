@@ -70,9 +70,8 @@ class ResultLoader(
   
               return@waitForEvent
             } else {
-              sendTrackEmbed(track).run {
-                manager.queue(track, ctx.textChannel)
-              }
+              sendTrackEmbed(track)
+              manager.queue(track, ctx.textChannel)
             }
           } catch (e: Exception) {
             ctx.send {
@@ -122,9 +121,7 @@ class ResultLoader(
     ctx.send {
       setColor(Integer.parseInt("3377de", 16))
       setThumbnail("https://i.ytimg.com/vi/${track.identifier}/hqdefault.jpg")
-      setDescription("[${track.info.title}](${track.info.uri})")
-      setFooter("Queued Up")
-      setTimestamp(LocalDateTime.now())
+      setDescription("Enqueued Track:\n\n[${track.info.title}](${track.info.uri})")
     }
   }
 }
