@@ -20,6 +20,7 @@ class Manager(val player: AudioPlayer) : AudioEventAdapter(), AudioSendHandler {
   
   private var channel: TextChannel? = null
   private var messageId: Long? = null
+  val repeat = Repeat.nothing
   val queue = LinkedList<AudioTrack>()
   
   // AudioSendHandler shit
@@ -44,6 +45,16 @@ class Manager(val player: AudioPlayer) : AudioEventAdapter(), AudioSendHandler {
   
   override fun onTrackEnd(player: AudioPlayer?, track: AudioTrack?, endReason: AudioTrackEndReason?) {
     if (endReason!!.mayStartNext) {
+      when (repeat) {
+        Repeat.track -> {
+          player!!.startTrack(track!!.makeClone(), false)
+        }
+        
+        Repeat.queue -> {
+          queue(track!!.makeClone(), null)
+        }
+      }
+      
       if (queue.isEmpty()) {
         channel?.sendMessage(
           EmbedBuilder()
@@ -131,4 +142,10 @@ class Manager(val player: AudioPlayer) : AudioEventAdapter(), AudioSendHandler {
     
     player.addListener(this)
   }
+}
+
+enum class Repeat {
+  track,
+  queue,
+  nothing,
 }
