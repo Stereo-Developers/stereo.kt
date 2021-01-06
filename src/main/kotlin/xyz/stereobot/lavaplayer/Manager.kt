@@ -20,7 +20,7 @@ class Manager(val player: AudioPlayer) : AudioEventAdapter(), AudioSendHandler {
   
   private var channel: TextChannel? = null
   private var messageId: Long? = null
-  val repeat = Repeat.nothing
+  var repeat = Repeat.nothing
   val queue = LinkedList<AudioTrack>()
   
   // AudioSendHandler shit
@@ -45,12 +45,10 @@ class Manager(val player: AudioPlayer) : AudioEventAdapter(), AudioSendHandler {
   
   override fun onTrackEnd(player: AudioPlayer?, track: AudioTrack?, endReason: AudioTrackEndReason?) {
     if (endReason!!.mayStartNext) {
-      when (repeat) {
-        Repeat.track -> {
+      if (repeat != Repeat.nothing) {
+        if (repeat == Repeat.track) {
           player!!.startTrack(track!!.makeClone(), false)
-        }
-        
-        Repeat.queue -> {
+        } else {
           queue(track!!.makeClone(), null)
         }
       }
@@ -137,15 +135,17 @@ class Manager(val player: AudioPlayer) : AudioEventAdapter(), AudioSendHandler {
     player.startTrack(queue.poll(), false)
   }
   
+  fun loop(loopType: String = "nothing") {
+    when (loopType) {
+      "queue" -> repeat = Repeat.queue
+      "track" -> repeat = Repeat.track
+      "nothing" -> repeat = Repeat.nothing
+    }
+  }
+  
   init {
     frame.setBuffer(buffer)
     
     player.addListener(this)
   }
-}
-
-enum class Repeat {
-  track,
-  queue,
-  nothing,
 }

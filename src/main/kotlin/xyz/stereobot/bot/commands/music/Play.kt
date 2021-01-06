@@ -5,7 +5,7 @@ import me.devoxin.flight.api.annotations.Command
 import me.devoxin.flight.api.annotations.Greedy
 import me.devoxin.flight.api.entities.Cog
 import net.dv8tion.jda.api.Permission
-import xyz.stereobot.bot.extensions.playerRegistry
+import xyz.stereobot.bot.utils.extensions.playerRegistry
 
 class Play : Cog {
   @Command(

@@ -6,9 +6,8 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import me.devoxin.flight.api.Context
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
-import xyz.stereobot.bot.extensions.truncate
-import xyz.stereobot.bot.extensions.waiter
-import java.time.LocalDateTime
+import xyz.stereobot.bot.utils.extensions.truncate
+import xyz.stereobot.bot.utils.extensions.waiter
 import java.util.concurrent.TimeUnit
 
 class ResultLoader(
@@ -17,6 +16,7 @@ class ResultLoader(
 ) : AudioLoadResultHandler {
   override fun trackLoaded(track: AudioTrack?) {
     if (track != null) {
+      manager.queue(track, ctx.textChannel)
       return sendTrackEmbed(track)
     }
   }

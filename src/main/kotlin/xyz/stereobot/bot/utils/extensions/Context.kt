@@ -1,4 +1,4 @@
-package xyz.stereobot.bot.extensions
+package xyz.stereobot.bot.utils.extensions
 
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter
 import me.devoxin.flight.api.Context
@@ -14,3 +14,6 @@ val Context.playerRegistry: Registry
 
 val Context.player: Manager
   get() = Launcher.playerRegistry.get(this.guild!!.idLong)
+
+val Context.isActive: Boolean
+  get() = this.player.player.playingTrack != null

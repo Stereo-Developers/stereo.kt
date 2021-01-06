@@ -1,4 +1,4 @@
-package xyz.stereobot.bot.extensions
+package xyz.stereobot.bot.utils.extensions
 
 val String.truncate: Function1<Int, *>
   get() = fun (amount: Int): String {
