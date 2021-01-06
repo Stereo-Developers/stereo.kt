@@ -9,6 +9,7 @@ import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.audio.AudioSendHandler
 import net.dv8tion.jda.api.entities.TextChannel
+import xyz.stereobot.bot.Launcher
 import java.nio.ByteBuffer
 import java.time.LocalDateTime
 import java.util.*
@@ -47,10 +48,11 @@ class Manager(val player: AudioPlayer) : AudioEventAdapter(), AudioSendHandler {
         channel?.sendMessage(
           EmbedBuilder()
             .setColor(Integer.parseInt("3377de", 16))
-            .setDescription("")
+            .setDescription("The queue has been cleared out, so I'll be leaving now.")
             .build()
         )?.queue {
           channel?.guild?.audioManager?.closeAudioConnection()
+          Launcher.playerRegistry.destroy(channel?.guild?.idLong!!)
         }
         
         return
@@ -76,7 +78,14 @@ class Manager(val player: AudioPlayer) : AudioEventAdapter(), AudioSendHandler {
   fun announce(track: AudioTrack): Unit? {
     val thumbnailUrl = "https://i.ytimg.com/vi/${track.identifier}/hqdefault.jpg"
     
-    return if (this.messageId == null) {
+    return if (
+      this.messageId == null ||
+      channel?.latestMessageIdLong!! != this.messageId
+    ) {
+      if (this.messageId != null) {
+        channel?.deleteMessageById(this.messageId!!)
+      }
+      
       channel?.sendMessage(
         EmbedBuilder()
           .setColor(Integer.parseInt("3377de", 16))
