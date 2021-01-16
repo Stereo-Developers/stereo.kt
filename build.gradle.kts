@@ -30,9 +30,9 @@ dependencies {
   implementation(group = "com.jagrosh", name = "jda-utilities", version = "3.0.4")
   
   // lavaplayer
-  implementation(group = "com.sedmelluq", name = "lavaplayer", version = "1.3.62")
+  implementation(group = "com.sedmelluq", name = "lavaplayer", version = "1.3.66")
   implementation(group = "com.sedmelluq", name = "lavaplayer-ext-youtube-rotator", version = "0.2.1")
-  implementation(group = "com.github.natanbc", name = "lavadsp", version = "0.7.4")
+  implementation(group = "com.github.natanbc", name = "lavadsp", version = "0.7.6")
   
   // useful shit
   implementation(group = "org.reflections", name = "reflections", version = "0.9.12")
