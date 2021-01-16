@@ -41,7 +41,7 @@ class PrologBuilder {
       
       for (line in lines) {
         if (line.name.isNotEmpty() && line.value.isNotEmpty()) {
-          append(line.name.padEnd(padding(), ' '), line.value)
+          append("${line.name.padEnd(padding(), ' ')} : ", line.value)
           append("\n")
         }
       }

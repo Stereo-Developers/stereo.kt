@@ -1,5 +1,7 @@
 package gg.stereo.bot.commands.general
 
+import gg.stereo.bot.utils.Line
+import gg.stereo.bot.utils.PrologBuilder
 import gg.stereo.bot.utils.extensions.truncate
 import gg.stereo.command.entities.annotations.Description
 import gg.stereo.command.entities.annotations.Init
@@ -28,6 +30,23 @@ class Help : Command() {
         "Command information for ${command.getInfo()!!.trigger}",
         null,
         ctx.author.effectiveAvatarUrl
+      )
+      
+      addField(
+        "› Basic Usages",
+        PrologBuilder().apply {
+          val info = command.getInfo()!!
+          
+          addLine(Line("Trigger", info.trigger))
+          
+          if (info.triggers.isNotEmpty()) {
+            addLine(Line("Triggers", info.triggers.joinToString(", ")))
+          }
+          
+          addLine(Line("Group", info.group))
+          
+        }.build(),
+        false
       )
     }
   }
