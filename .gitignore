@@ -1,0 +1,9 @@
+# directories
+.gradle/
+.idea/
+gradle/
+build/
+out/
+
+# files
+config.conf
