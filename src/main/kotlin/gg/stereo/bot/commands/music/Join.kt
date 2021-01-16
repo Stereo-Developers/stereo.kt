@@ -1,6 +1,6 @@
 package gg.stereo.bot.commands.music
 
-import gg.stereo.bot.extensions.truncate
+import gg.stereo.bot.utils.extensions.truncate
 import gg.stereo.command.entities.annotations.Description
 import gg.stereo.command.entities.annotations.Init
 import gg.stereo.command.entities.annotations.Restrictions

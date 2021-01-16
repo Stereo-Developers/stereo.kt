@@ -1,4 +1,4 @@
-package gg.stereo.bot.extensions
+package gg.stereo.bot.utils.extensions
 
 val String.truncate: Function1<Int, *>
   get() = fun (amount: Int): String {
