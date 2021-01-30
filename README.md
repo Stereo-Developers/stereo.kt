@@ -1,3 +1,9 @@
+# IMPORTANT!
+
+I have decided that I will be rewriting Stereo in Kotlin. Therefore, its source code will be private. This repo will be open for historical purposes.
+
+---
+
 <h1 align="center">Stereo.kt</h1>
 
 A music bot that uh, is written in Kotlin + Lavaplayer, the perfect mix, amirite?
